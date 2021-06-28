@@ -22,7 +22,7 @@ return (
         <Button color='inherit' onClick={()=>{ props.show(!props.card.show)}}>
             <Box display="flex" width={130} height={50} borderRadius={7} bgcolor='primary' alignItems='center' justifyContent='center' justify='center'>
             <AddShoppingCartIcon />
-                <Typography variant='h6' gutterBottom mx={3}> card ({props.card.count}) </Typography>
+                <Typography variant='h6' gutterBottom mx={3}> card {props.card.count} </Typography>
             </Box>
         </Button>
         <Drawer anchor='right' open={props.card.show} onClick={()=>{props.show(false)}} >
