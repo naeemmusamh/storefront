@@ -7,6 +7,7 @@ let initialState = {
             category: 'electronics',
             price: 899.0,
             inStock: 5,
+            count: 0,
         },{
             id: '2',
             name: 'Phone',
@@ -14,6 +15,7 @@ let initialState = {
             category: 'electronics',
             price: 599.0,
             inStock: 8,
+            count: 0,
         },{
             id: '3',
             name: 'Watch',
@@ -21,6 +23,7 @@ let initialState = {
             category: 'electronics',
             price: 399.0,
             inStock: 5,
+            count: 0,
         },{
             id: '4',
             name: 'Screen',
@@ -28,6 +31,7 @@ let initialState = {
             category: 'electronics',
             price: 799.0,
             inStock: 3,
+            count: 0,
         },{
             id: '5',
             name: 'Tomato',
@@ -35,6 +39,7 @@ let initialState = {
             category: 'food',
             price: 19.0,
             inStock: 20,
+            count: 0,
         },{
             id: '6',
             name: 'Broccoli',
@@ -42,6 +47,7 @@ let initialState = {
             category: 'food',
             price: 69.0,
             inStock: 10,
+            count: 0,
         },{
             id: '7',
             name: 'Avocado',
@@ -49,38 +55,60 @@ let initialState = {
             category: 'food',
             price: 79.0,
             inStock: 5,
+            count: 0,
         },   
     ],
-    count: 0,
 };
 
 const products = (state = initialState, action) => {
     let { type, payload } = action;
     switch (type) {
       case 'ACTIVE':
-        let products = initialState.products.filter((product) =>
-          product.category === payload ? product.category : null
-        );
+        let products = initialState.products.filter((product) =>{
+          if(product.category === payload){
+            return product.category;
+          }else{
+            return null;
+          }
+        });
         return { products, count: state.count };
       case 'INCREMENT':
-        const count = state.count + 1;
-        return { products: state.products, count };
+        let productList = state.products.map((product)=>{
+          if(payload.name === product.name){
+            return {
+              id: product.id,
+              name: product.name,
+              url: product.url,
+              category: product.category,
+              price: product.price,
+              inStock: product.inStock -1,
+              count: product.count +1,
+            }
+          }else{
+            return product;
+          }
+        });
+        return { products: productList };
+        case 'DECREMENT' :
+          let newProducts = state.products.map((product)=>{
+            if(payload.name === product.name){
+              return {
+                id: product.id,
+                name: product.name,
+                url: product.url,
+                category: product.category,
+                price: product.price,
+                inStock: product.inStock +1,
+                count: product.count -1,
+              }
+            }else{
+              return product;
+            }
+          });
+          return { products: newProducts};
       default:
         return state;
     }
   };
   
   export default products;
-  
-  export const active = (categoryName) => {
-    return {
-      type: 'ACTIVE',
-      payload: categoryName,
-    };
-  };
-  
-  export const increment = () => {
-    return {
-      type: 'INCREMENT',
-    };
-  };

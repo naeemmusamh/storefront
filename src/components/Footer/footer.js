@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
     return (
       <footer className={classes.footer}>
         <Typography variant="body2" color="inherit" align="center">
-          Copyright ©
-          {new Date().getFullYear()}
+          Copyright © Code fellows
         </Typography>
       </footer>
     );
