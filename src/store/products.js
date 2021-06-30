@@ -1,114 +1,81 @@
 let initialState = {
-    products: [
-        {
-            id: '1',
-            name: 'LAPTOP',
-            url: 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            category: 'electronics',
-            price: 899.0,
-            inStock: 5,
-            count: 0,
-        },{
-            id: '2',
-            name: 'Phone',
-            url: 'https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            category: 'electronics',
-            price: 599.0,
-            inStock: 8,
-            count: 0,
-        },{
-            id: '3',
-            name: 'Watch',
-            url: 'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            category: 'electronics',
-            price: 399.0,
-            inStock: 5,
-            count: 0,
-        },{
-            id: '4',
-            name: 'Screen',
-            url: 'https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            category: 'electronics',
-            price: 799.0,
-            inStock: 3,
-            count: 0,
-        },{
-            id: '5',
-            name: 'Tomato',
-            url: 'https://images.pexels.com/photos/1391487/pexels-photo-1391487.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            category: 'food',
-            price: 19.0,
-            inStock: 20,
-            count: 0,
-        },{
-            id: '6',
-            name: 'Broccoli',
-            url: 'https://images.pexels.com/photos/4720411/pexels-photo-4720411.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            category: 'food',
-            price: 69.0,
-            inStock: 10,
-            count: 0,
-        },{
-            id: '7',
-            name: 'Avocado',
-            url:'https://images.pexels.com/photos/3850613/pexels-photo-3850613.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            category: 'food',
-            price: 79.0,
-            inStock: 5,
-            count: 0,
-        },   
-    ],
+  products: [],
+  display: []
 };
 
 const products = (state = initialState, action) => {
-    let { type, payload } = action;
-    switch (type) {
-      case 'ACTIVE':
-        let products = initialState.products.filter((product) =>{
-          if(product.category === payload){
-            return product.category;
-          }else{
-            return null;
-          }
-        });
-        return { products, count: state.count };
-      case 'INCREMENT':
-        let productList = state.products.map((product)=>{
-          if(payload.name === product.name){
-            return {
-              id: product.id,
+  let { type, payload } = action;
+  switch (type) {
+    case 'GET':
+      return { products: payload, display: state.display };
+    case 'ACTIVE':
+      let products = state.products.filter((product) =>
+        product.category === payload ? product.category : null
+      );
+      return { products: state.products, display: products };
+    case 'INCREMENT':
+      let productList = state.products.map((product) =>{
+        if(payload.name === product.name){
+          return {
+              _id: product._id,
               name: product.name,
               url: product.url,
               category: product.category,
               price: product.price,
-              inStock: product.inStock -1,
-              count: product.count +1,
+              inStock: product.inStock - 1,
+              count: product.count + 1,
             }
-          }else{
-            return product;
-          }
-        });
-        return { products: productList };
-        case 'DECREMENT' :
-          let newProducts = state.products.map((product)=>{
-            if(payload.name === product.name){
-              return {
-                id: product.id,
-                name: product.name,
-                url: product.url,
-                category: product.category,
-                price: product.price,
-                inStock: product.inStock +1,
-                count: product.count -1,
-              }
-            }else{
-              return product;
+         }else{
+           return product;
+          }});
+      let displayList = state.display.map((product) =>{
+        if (payload.name === product.name){
+           return {
+              _id: product._id,
+              name: product.name,
+              url: product.url,
+              category: product.category,
+              price: product.price,
+              inStock: product.inStock - 1,
+              count: product.count + 1,
             }
-          });
-          return { products: newProducts};
-      default:
-        return state;
-    }
-  };
-  
-  export default products;
+         }else{ 
+          return product;
+         }});
+      return { products: productList, display: displayList };
+    case 'DECREMENT':
+      let newProducts = state.products.map((product) =>{
+        if(payload.name === product.name){
+          return {
+              _id: product._id,
+              name: product.name,
+              url: product.url,
+              category: product.category,
+              price: product.price,
+              inStock: product.inStock + payload.count + 1,
+              count: product.count - payload.count - 1,
+            }
+         }else{
+          return product;
+         }});
+      let newDisplayProducts = state.display.map((product) =>{
+           if(payload.name === product.name){
+           return {
+              _id: product._id,
+              name: product.name,
+              url: product.url,
+              category: product.category,
+              price: product.price,
+              inStock: product.inStock + payload.count + 1,
+              count: product.count - payload.count - 1,
+            }
+         }else{ 
+           return product;
+         }});
+      return { products: newProducts, display: newDisplayProducts };
+    default:
+      return state;
+  }
+};
+
+export default products;
