@@ -30,15 +30,19 @@
 
 # lab(37)
 
-[deploylink](https://naeemmusamh.github.io/storefront/)
-
 [Pull Request](https://github.com/naeemmusamh/storefront/pull/2)
-
-[Full Code](https://github.com/naeemmusamh/storefront)
 
 # structure
 
 ![lab36](./public/lab37.png)
+
+# lab(38)
+
+[Pull Request](https://github.com/naeemmusamh/storefront/pull/3)
+
+# structure
+
+![lab36](./public/lab38.png)
 
 # the package that using in this app
 
@@ -59,3 +63,7 @@
 [redux-devtools-extension](https://www.npmjs.com/package/redux-devtools-extension)
 
 [gh-pages](https://www.npmjs.com/package/gh-pages)
+
+[redux-thunk](https://www.npmjs.com/package/redux-thunk)
+
+[superagent](https://www.npmjs.com/package/superagent)
