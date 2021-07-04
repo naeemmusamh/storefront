@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import Paycard from './paycard.js';
 
 import { Button, Box, Typography, Drawer, List, ListItem, Grid, Divider, makeStyles } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
@@ -8,8 +9,12 @@ import { increment, show, decrement } from '../../store/actions.js';
 
 const useStyles = makeStyles({
   list: {
-    width: 300,
+    width: 800,
   },
+  buttonPay:{
+    marginTop: 350,
+    marginLeft: 80,
+  }
 });
 
 const Card = (props) => {
@@ -32,6 +37,7 @@ const Card = (props) => {
               <Typography variant="h4"> Cart </Typography>
             </Grid>
           </ListItem>
+          <Typography variant='h4'> Order Summary </Typography>
           <Divider />
           {display.map((product) => {
             return (
@@ -48,7 +54,11 @@ const Card = (props) => {
               </ListItem>
             );
           })}
+              <Typography variant='h6'> TOTAL </Typography>
           <Divider />
+          <div>
+          <Paycard/>
+          </div>
         </List>
       </Drawer>
     </>
